@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: php_fpm_app
+    volumes:
+      - .:/var/www/html
+      - ./php_errors.log:/var/www/html/php_errors.log
+    expose:
+      - "9000"
+    env_file:
+      - .env
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - app
+
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: certbot
+  #   volumes:
+  #     - ./certbot/conf:/etc/letsencrypt
+  #     - ./certbot/www:/var/www/certbot
+  #   command: certonly --webroot -w /var/www/certbot --force-renewal --email waithawoocw@gmail.com -d vending.waithawoo.com --agree-tos
