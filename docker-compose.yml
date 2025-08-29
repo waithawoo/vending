@@ -32,4 +32,4 @@ services:
   #   volumes:
   #     - ./certbot/conf:/etc/letsencrypt
   #     - ./certbot/www:/var/www/certbot
-  #   command: certonly --webroot -w /var/www/certbot --force-renewal --email waithawoocw@gmail.com -d vending.waithawoo.com --agree-tos
+  #   command: certonly --webroot -w /var/www/certbot --force-renewal --email waithawoocw@gmail.com -d testvending.waithawoo.com --agree-tos
